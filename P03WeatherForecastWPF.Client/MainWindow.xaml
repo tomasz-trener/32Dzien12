@@ -1,0 +1,62 @@
+<Window x:Class="P03WeatherForecastWPF.Client.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:P03WeatherForecastWPF.Client"
+        xmlns:vm="clr-namespace:P03WeatherForecastWPF.Client.ViewModels"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
+        Title="P03 – Pogoda (MVVM + DI)" Height="460" Width="680">
+
+    <!-- d:DataContext podpowiada IntelliSense nazwy właściwości ViewModelu w XAML (tylko w czasie projektowania) -->
+
+    <DockPanel Margin="8">
+
+        <!-- Lewa kolumna: wyszukiwanie miasta -->
+        <StackPanel DockPanel.Dock="Left" Width="280" Margin="0,0,8,0">
+            <Label Content="Miasto:" />
+
+            <!-- UpdateSourceTrigger=PropertyChanged: ViewModel dostaje tekst po każdej literze,
+                 a nie dopiero po opuszczeniu pola (domyślnie LostFocus) -->
+            <TextBox Text="{Binding CityName, UpdateSourceTrigger=PropertyChanged}">
+                <TextBox.InputBindings>
+                    <KeyBinding Key="Enter" Command="{Binding LoadCitiesCommand}" />
+                </TextBox.InputBindings>
+            </TextBox>
+
+            <!-- Command zamiast Click: przycisk sam się wyłącza, gdy CanExecute zwraca false -->
+            <Button Content="Szukaj" Command="{Binding LoadCitiesCommand}" />
+
+            <ProgressBar Height="6" IsIndeterminate="True"
+                         Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibility}}" />
+
+            <ListBox Height="260"
+                     ItemsSource="{Binding Cities}"
+                     SelectedItem="{Binding SelectedCity}"
+                     DisplayMemberPath="FullName" />
+        </StackPanel>
+
+        <!-- Prawa część: pogoda dla wybranego miasta -->
+        <StackPanel>
+            <Label Content="Wybrane miasto:" FontWeight="Bold" />
+            <Label Content="{Binding SelectedCity.FullName, FallbackValue=—}" />
+
+            <Label Content="Temperatura:" FontWeight="Bold" />
+            <Label Content="{Binding Weather.Temperature, Converter={StaticResource TemperatureToDisplay}}" FontSize="28" />
+
+            <Label Content="Wiatr:" FontWeight="Bold" />
+            <Label Content="{Binding Weather.WindSpeed, StringFormat={}{0:F0} km/h, FallbackValue=—}" />
+
+            <Label Content="Opis:" FontWeight="Bold" />
+            <Label Content="{Binding Weather.Description, FallbackValue=—}" />
+
+            <Label Content="Czas pomiaru:" FontWeight="Bold" />
+            <Label Content="{Binding Weather.Time, StringFormat=g, FallbackValue=—}" />
+
+            <!-- Komunikat o błędzie widoczny tylko, gdy ErrorMessage nie jest pusty -->
+            <TextBlock Text="{Binding ErrorMessage}" Foreground="DarkRed" TextWrapping="Wrap" Margin="4"
+                       Visibility="{Binding ErrorMessage, Converter={StaticResource NullToVisibility}}" />
+        </StackPanel>
+    </DockPanel>
+</Window>

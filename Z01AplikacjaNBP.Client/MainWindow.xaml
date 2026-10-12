@@ -1,0 +1,47 @@
+<Window x:Class="Z01AplikacjaNBP.Client.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:Z01AplikacjaNBP.Client.ViewModels"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
+        Title="Z01 – Kursy walut NBP" Height="520" Width="760">
+
+    <Grid Margin="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Button Content="Pobierz kursy" Command="{Binding LoadRatesCommand}" Padding="12,4" />
+            <TextBlock Text="{Binding TableInfo}" VerticalAlignment="Center" Margin="12,0" />
+        </StackPanel>
+
+        <ProgressBar Grid.Row="1" Height="6" IsIndeterminate="True" Margin="0,6"
+                     Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibility}}" />
+
+        <!-- DataGrid: kolumny definiujemy ręcznie, żeby mieć polskie nagłówki i formatowanie -->
+        <DataGrid Grid.Row="2"
+                  ItemsSource="{Binding Rates}"
+                  SelectedItem="{Binding SelectedRate}"
+                  AutoGenerateColumns="False" IsReadOnly="True"
+                  CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Kod" Binding="{Binding Code}" Width="80" />
+                <DataGridTextColumn Header="Waluta" Binding="{Binding Currency}" Width="*" />
+                <DataGridTextColumn Header="Kurs średni (PLN)" Binding="{Binding Mid, StringFormat=N4}" Width="160" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,8,0,0">
+            <Label Content="Kwota w PLN:" />
+            <TextBox Width="120" Text="{Binding AmountPln, UpdateSourceTrigger=PropertyChanged}" />
+            <Label Content="{Binding ConvertedAmount}" FontWeight="Bold" />
+            <TextBlock Text="{Binding ErrorMessage}" Foreground="DarkRed" VerticalAlignment="Center" Margin="12,0" />
+        </StackPanel>
+    </Grid>
+</Window>
