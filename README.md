@@ -1,11 +1,10 @@
 # 32Dzien12 – MVVM, Dependency Injection, delegaty
 
-Edycja 32 kursu C#/.NET, dzień 12. Kod końcowy dnia oraz dwie instrukcje krok po kroku.
+Edycja 32 kursu C#/.NET, dzień 12. Kod końcowy dnia oraz instrukcja krok po kroku.
 
-| Plik | Dla kogo |
+| Plik | Opis |
 |---|---|
-| [INSTRUKCJA_PROWADZACY.md](INSTRUKCJA_PROWADZACY.md) | trener: co mówić, co klikać, co pokazywać (🗣️ ⌨️ 👀 💡) |
-| [INSTRUKCJA_STUDENT.md](INSTRUKCJA_STUDENT.md) | uczestnik: teoria w pigułce, kroki, punkty kontrolne, zadania |
+| [Instrukcja.md](Instrukcja.md) | instrukcja dnia – teoria, kroki, kod, punkty kontrolne |
 
 ## Punkt startowy
 

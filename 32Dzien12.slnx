@@ -1,8 +1,7 @@
 <Solution>
   <Folder Name="/Solution Items/">
     <File Path="README.md" />
-    <File Path="INSTRUKCJA_PROWADZACY.md" />
-    <File Path="INSTRUKCJA_STUDENT.md" />
+    <File Path="Instrukcja.md" />
   </Folder>
   <Project Path="P03WeatherForecastWPF.Client/P03WeatherForecastWPF.Client.csproj" />
   <Project Path="P04Delegaty/P04Delegaty.csproj" />
