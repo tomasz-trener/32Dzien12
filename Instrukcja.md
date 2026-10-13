@@ -2600,9 +2600,9 @@ Commit i wysłanie do repozytorium (trzy ostatnie polecenia tylko wtedy, gdy mam
 git init
 git add .
 git commit -m "Dzien 12: delegaty, MVVM (klasyczny + CommunityToolkit), binding, DI przez Generic Host, zadanie NBP"
-git branch -M master
+git branch -M main
 git remote add origin https://github.com/tomasz-trainer/32Dzien12.git
-git push -u origin master
+git push -u origin main
 ```
 
 ## Pytania kontrolne
