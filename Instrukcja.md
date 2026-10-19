@@ -44,7 +44,7 @@ Zasady dotyczące kodu:
 - Pliki oznaczone **„wersja tymczasowa”** są etapem pośrednim. Nadpisujemy je w późniejszej sekcji, ale dzięki nim projekt kompiluje się po każdej sekcji.
 - Numeracja sekcji (1–8) odpowiada „etapom” w komentarzach kodu: „etap 7” to sekcja 7.
 - Fragmenty **Dlaczego tak** wyjaśniają decyzje projektowe; opierają się na nich dni 13–18.
-- Gotowy kod jest w repozytorium GitHub `tomasz-trainer/32Dzien12`, ale najwięcej daje napisanie go samodzielnie, krok po kroku.
+- Gotowy kod jest w repozytorium GitHub `tomasz-trener/32Dzien12`, ale najwięcej daje napisanie go samodzielnie, krok po kroku.
 
 ## Plan dnia (orientacyjnie)
 
@@ -79,7 +79,7 @@ Przerwy po sekcjach 2, 4 i 7. Sekcja 8 zaczyna się od 45 minut pracy własnej.
 - Visual Studio 2026 z workloadem **.NET desktop development** (albo VS Code + .NET 10 SDK).
 - .NET 10 SDK.
 - Dostęp do internetu: `open-meteo.com`, `api.nbp.pl`, `nuget.org`.
-- Kod z dnia 11: folder `P03WeatherForecastWPF.Client` (bez folderów `bin` i `obj`). Brakujący kod jest w repozytorium `tomasz-trainer/32Dzien11`.
+- Kod z dnia 11: folder `P03WeatherForecastWPF.Client` (bez folderów `bin` i `obj`). Brakujący kod jest w repozytorium `tomasz-trener/32Dzien11`.
 
 **Przygotowanie:**
 
@@ -2575,36 +2575,6 @@ public partial class MainWindow : Window
 
 Jutro (dzień 13) powstaje własne Web API w tym samym Generic Hoście: `builder.Services`, `AddScoped`, `appsettings.json` będą wyglądały znajomo. P03 podłączymy do tego API. `MainViewModel`, `IMeteoService` i rejestracje w `App.xaml.cs` zostają; dojdzie `IProductService` z biblioteki wspólnej `P06Shop.Shared`.
 
-### Zapisanie pracy
-
-Solucja końcowa. Visual Studio dodało `README.md` i instrukcję do folderu **Solution Items**; ten folder jest opcjonalny.
-
-**Plik:** `32Dzien12.slnx`
-
-```xml
-<!-- 32Dzien12.slnx -->
-<Solution>
-  <Folder Name="/Solution Items/">
-    <File Path="README.md" />
-    <File Path="Instrukcja.md" />
-  </Folder>
-  <Project Path="P03WeatherForecastWPF.Client/P03WeatherForecastWPF.Client.csproj" />
-  <Project Path="P04Delegaty/P04Delegaty.csproj" />
-  <Project Path="Z01AplikacjaNBP.Client/Z01AplikacjaNBP.Client.csproj" />
-</Solution>
-```
-
-Commit i wysłanie do repozytorium (trzy ostatnie polecenia tylko wtedy, gdy mamy własne repozytorium na GitHubie; adres podajemy własny):
-
-```powershell
-git init
-git add .
-git commit -m "Dzien 12: delegaty, MVVM (klasyczny + CommunityToolkit), binding, DI przez Generic Host, zadanie NBP"
-git branch -M main
-git remote add origin https://github.com/tomasz-trainer/32Dzien12.git
-git push -u origin main
-```
-
 ## Pytania kontrolne
 
 1. Czym różni się `event` od zwykłego pola typu delegata? Co może zrobić kod spoza klasy z jednym, a czego nie może z drugim?
@@ -2622,32 +2592,3 @@ git push -u origin main
 2. **P03: test ViewModelu bez WPF.** Program konsolowy tworzy ten sam host co `App.xaml.cs` (bez okna), pobiera `MainViewModel` z kontenera, ustawia `CityName = "Warszawa"`, wywołuje `await vm.LoadCitiesCommand.ExecuteAsync(null)` i wypisuje `Cities.Count`.
 3. **Z01: wybór tabeli.** `ComboBox` z wyborem tabeli `A`/`B` (`exchangerates/tables/B`) zbindowany do właściwości `TableName`; serwis dostaje nazwę tabeli jako parametr.
 4. **Z01: przelicznik w drugą stronę** (waluta → PLN) z przełącznikiem kierunku.
-
----
-
-## Dodatek A: zmiany względem edycji 26 i 31
-
-| Gdzie | Edycje 26/31 | Edycja 32 | Dlaczego |
-|---|---|---|---|
-| Platforma, pakiety | 26: .NET 8, toolkit 8.2.2, `Microsoft.Extensions.DependencyInjection` 8.0; 31: .NET 10, toolkit 8.4.2, DI 10.0.12, Newtonsoft 13 | .NET 10, `CommunityToolkit.Mvvm 8.4.2`, `Microsoft.Extensions.Hosting 10.0.12`, `Microsoft.Extensions.Http 10.0.12`; usunięty `Configuration.Json` (zawarty w Hosting), bez Newtonsoft | mniej pakietów, jeden host |
-| P04Delegaty | 31: cztery przypisania `Action`/`Func`/`Predicate` w `Main` | własny typ delegata, metoda wyższego rzędu, lambdy, LINQ, multicast, `event` z `EventArgs` i `-=`, mapa „gdzie to w MVVM” | zrozumienie `RelayCommand` i `PropertyChanged` |
-| ViewModel klasyczny | `BaseViewModel` + pusty `IMainViewModel`; `CityName` bez `OnPropertyChanged`; `async void loadCities()` bez obsługi błędów | `ViewModels/Classic/MainViewModelClassic.cs` w całości w jednym pliku (widać każdy element), wszystkie właściwości powiadamiają, `async Task` + discard, `IsBusy`, `ErrorMessage`, `try/catch/finally`, `CanExecute` | kompletny wzorzec; pusty interfejs nic nie dawał |
-| `RelayCommand` | `internal`, parametry bez `?` (ostrzeżenia nullable) | `public`, `Action<object?>`, `Predicate<object?>?`, komentarz o `RequerySuggested` | czysty build z `Nullable=enable` |
-| Toolkit | `[ObservableProperty] private Weather weather;` (pole z małej litery), `[RelayCommand] public async void LoadCities()`, `Cities` raz podmieniana w całości, raz `Clear/Add`; V2 i V3 jako kolejne pliki | `[ObservableProperty] public partial …` (C# 13 / toolkit 8.4), `[NotifyCanExecuteChangedFor]`, `[RelayCommand(CanExecute=…)] private async Task`, `partial void OnSelectedCityChanged`, `ObservableCollection { get; }` | nowa składnia bez pola‑cienia; `async void` wywracał aplikację |
-| Binding | `TextBox` bez `UpdateSourceTrigger`, brak `FallbackValue`, `d:DataContext`, `KeyBinding` | `UpdateSourceTrigger=PropertyChanged`, `FallbackValue=—`, `KeyBinding Enter`, `d:DataContext` z `DesignInstance`, `ProgressBar` z `IsBusy`, komunikat z `NullToVisibility` | przycisk reaguje na każdą literę; IntelliSense w XAML |
-| Konwertery | 26: `TemperatureToDisplayConveter` (literówka), bez `culture`, `ConvertBack` parsuje; zasoby w `Window.Resources` | poprawna nazwa, `culture`, `NotSupportedException`, `NullToVisibilityConverter`, zasoby i style w `App.xaml` | zasoby wspólne dla kolejnych okien |
-| Serwis | 31: `OpenMeteoService` singleton tworzy `HttpClient` w `using` przy każdym zapytaniu i sam czyta konfigurację; 26: AccuWeather z kluczem API | `OpenMeteoService(HttpClient, IOptions<AppSettings>)` przez `AddHttpClient<IMeteoService, OpenMeteoService>` | `IHttpClientFactory`, brak wyczerpania gniazd, bez klucza |
-| `FakeMeteoService` | stałe dane, bez opóźnienia | filtrowanie po nazwie, `Task.Delay(500)`, losowa pogoda | widać pasek postępu i brak wyników |
-| DI | `new ServiceCollection()` + `BuildServiceProvider()`, `GetService` (może zwrócić `null`), brak zwalniania | `Host.CreateApplicationBuilder`, `Configure<AppSettings>`, `GetRequiredService`, `OnExit` zatrzymuje hosta | ten sam model co ASP.NET Core (dzień 13); konfiguracja i logowanie za darmo |
-| Drugie okno | `SecondWindow` otwierane przez `IServiceProvider` wstrzyknięty do ViewModelu | usunięte | service locator w ViewModelu to antywzorzec; nawigacja i dialogi wracają w dniu 14 przez `IMessageDialogService` |
-| Konfiguracja | `UserSecretsId` i `AddUserSecrets` bez żadnego sekretu, `Copy always` | `IOptions<AppSettings>` z `Configure<T>`, `PreserveNewest` | User Secrets dopiero przy sekretach Azure (dzień 15) |
-| Zadanie NBP | 31: `P01AplikacjaNBP_WPF.Client`: Newtonsoft, `HttpClient` w `using`, `Mid` jako `double`, `DataContext = new MainViewModel(new NbpWebApiService())`, bez błędów i `IsBusy`; brak numeracji zgodnej z resztą | `Z01AplikacjaNBP.Client`: `System.Text.Json`, `decimal`, `DateOnly`, `AddHttpClient` z `BaseAddress`, Generic Host, przelicznik z `[NotifyPropertyChangedFor]`, `IsBusy`, `ErrorMessage`, sortowanie | ten sam schemat co P03; nazwa `Z01` = zadanie |
-| Instrukcja | `Podsumowanie.txt` z 7 punktami; kod końcowy od razu, bez etapów pośrednich | jedna instrukcja z teorią, krokami, kodem i punktami kontrolnymi; etapy pośrednie, które się kompilują (`FakeMeteoService`, `Options.Create` w wersjach tymczasowych) | projekt nigdy nie jest „czerwony” dłużej niż jedną sekcję |
-
-## Dodatek B: jak zweryfikowano instrukcję
-
-- Cały kod końcowy (`P03WeatherForecastWPF.Client`, `P04Delegaty`, `Z01AplikacjaNBP.Client`) zbudowano `dotnet build 32Dzien12.slnx` z .NET SDK 10.0.401 bez błędów i ostrzeżeń. Dodatkowo zbudowano każdy etap pośredni (stan po sekcjach 3, 4, 5, 6, 7) z plikami „wersja tymczasowa” dokładnie w tej treści, jaka jest w instrukcji.
-- `P04Delegaty` uruchomiono z konsoli; wyjście w sekcji 1 jest skopiowane z tego uruchomienia.
-- Logikę `MainViewModel` (P03) i `MainViewModel` (Z01) przetestowano w programie konsolowym z tym samym kontenerem DI (`Host.CreateApplicationBuilder`, te same rejestracje co w `App.xaml.cs`): `LoadCitiesCommand` dla `Warszawa` zwraca 2 miasta, ustawienie `SelectedCity` pobiera pogodę (`Weather` z temperaturą i opisem), `xyzxyz` daje `ErrorMessage = "Nie znaleziono miasta o takiej nazwie."`, pusta nazwa wyłącza komendę (`CanExecute` zwraca `false`). NBP: tabela A z 32 walutami, `AmountPln = 430` i `SelectedRate = EUR` dają `430,00 PLN = 98,23 EUR` (kurs 4,3775 z tabeli z 2026‑10‑09).
-- Każdy blok kodu z pełnym plikiem porównano skryptem z plikiem w repozytorium (treść identyczna znak w znak); bloki „wersja tymczasowa” pochodzą z etapów pośrednich opisanych wyżej.
-- Okien WPF nie uruchamiano (środowisko bez Windows). Przed zajęciami warto przejść sekcje 3–8 w Visual Studio, w szczególności sprawdzić `StringFormat` na `Label.Content`, widoczność `ProgressBar` przy `FakeMeteoService` i komunikat `Unable to resolve service` z eksperymentu w sekcji 7. Gdy coś w XAML zachowuje się inaczej niż w punkcie kontrolnym, pierwsze miejsca do sprawdzenia to okno Output i tabele **Częste problemy**.
