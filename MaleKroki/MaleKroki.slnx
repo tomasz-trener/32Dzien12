@@ -1,0 +1,12 @@
+<Solution>
+  <Project Path="K01Binding/K01Binding.csproj" />
+  <Project Path="K02NotifyPropertyChanged/K02NotifyPropertyChanged.csproj" />
+  <Project Path="K03ObservableProperty/K03ObservableProperty.csproj" />
+  <Project Path="K04RelayCommand/K04RelayCommand.csproj" />
+  <Project Path="K05TwoWayBinding/K05TwoWayBinding.csproj" />
+  <Project Path="K06Collections/K06Collections.csproj" />
+  <Project Path="K07AsyncCommand/K07AsyncCommand.csproj" />
+  <Project Path="K08DiManual/K08DiManual.csproj" />
+  <Project Path="K09DiContainer/K09DiContainer.csproj" />
+  <Project Path="K10DiWpf/K10DiWpf.csproj" />
+</Solution>

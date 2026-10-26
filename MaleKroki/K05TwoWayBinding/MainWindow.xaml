@@ -1,0 +1,20 @@
+<!-- K05TwoWayBinding/MainWindow.xaml -->
+<Window x:Class="K05TwoWayBinding.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="K05 – binding w dwie strony" Height="260" Width="360">
+    <StackPanel Margin="16">
+        <TextBlock Text="Imię (odświeża przy każdym znaku):" />
+        <!-- UpdateSourceTrigger=PropertyChanged: ViewModel dostaje tekst po każdym naciśniętym klawiszu -->
+        <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Margin="0,4,0,12" />
+
+        <TextBlock Text="Imię (odświeża po opuszczeniu pola):" />
+        <!-- Domyślnie TextBox zapisuje do ViewModelu dopiero przy utracie fokusu (LostFocus) -->
+        <TextBox Text="{Binding Name}" Margin="0,4,0,12" />
+
+        <TextBlock Text="{Binding Greeting}" FontSize="20" FontWeight="Bold" />
+
+        <!-- StringFormat: formatowanie wartości bez kodu C# -->
+        <TextBlock Text="{Binding Name.Length, StringFormat='Liczba znaków: {0}'}" Foreground="Gray" />
+    </StackPanel>
+</Window>

@@ -1,0 +1,14 @@
+<!-- K02NotifyPropertyChanged/MainWindow.xaml -->
+<Window x:Class="K02NotifyPropertyChanged.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="K02 – INotifyPropertyChanged" Height="200" Width="320">
+    <StackPanel Margin="16">
+        <TextBlock Text="Wartość licznika:" />
+
+        <!-- Binding: TextBlock czyta właściwość Value z obiektu w DataContext -->
+        <TextBlock Text="{Binding Value}" FontSize="32" FontWeight="Bold" />
+
+        <Button Content="+1" Click="Increment_Click" Padding="8,4" />
+    </StackPanel>
+</Window>

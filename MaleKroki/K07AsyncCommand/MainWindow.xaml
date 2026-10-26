@@ -1,0 +1,24 @@
+<!-- K07AsyncCommand/MainWindow.xaml -->
+<Window x:Class="K07AsyncCommand.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="K07 – komenda asynchroniczna" Height="260" Width="380">
+    <StackPanel Margin="16">
+        <!-- Komenda async: przycisk jest nieaktywny, dopóki poprzednie pobieranie trwa -->
+        <Button Content="Pobierz dane (3 s)" Command="{Binding DownloadCommand}" Padding="12,6" />
+
+        <!-- Pasek widoczny tylko, gdy IsBusy = true -->
+        <ProgressBar IsIndeterminate="True" Height="16" Margin="0,8"
+                     Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibility}}" />
+
+        <TextBlock Text="{Binding Result}" FontSize="16" Margin="0,8" />
+
+        <Separator Margin="0,8" />
+
+        <TextBlock Text="Test: klikaj w trakcie pobierania – okno nie jest zamrożone." Foreground="Gray" />
+        <StackPanel Orientation="Horizontal" Margin="0,4">
+            <Button Content="Klik" Command="{Binding ClickCommand}" Padding="12,4" />
+            <TextBlock Text="{Binding Clicks, StringFormat='Kliknięć: {0}'}" Margin="12,0" VerticalAlignment="Center" />
+        </StackPanel>
+    </StackPanel>
+</Window>

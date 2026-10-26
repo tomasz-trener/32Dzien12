@@ -1,0 +1,8 @@
+<!-- K03ObservableProperty/App.xaml -->
+<Application x:Class="K03ObservableProperty.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+    </Application.Resources>
+</Application>

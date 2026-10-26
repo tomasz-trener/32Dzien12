@@ -1,0 +1,11 @@
+<!-- K10DiWpf/MainWindow.xaml -->
+<Window x:Class="K10DiWpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="K10 – MVVM + DI (Generic Host)" Height="220" Width="420">
+    <StackPanel Margin="16">
+        <TextBlock Text="{Binding Message}" FontSize="24" FontWeight="Bold" />
+        <TextBlock Text="{Binding ClockInfo}" Foreground="Gray" Margin="0,8" />
+        <Button Content="Odśwież" Command="{Binding RefreshCommand}" Padding="12,4" HorizontalAlignment="Left" />
+    </StackPanel>
+</Window>

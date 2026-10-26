@@ -5,12 +5,16 @@ Edycja 32 kursu C#/.NET, dzień 12. Kod końcowy dnia oraz instrukcja krok po kr
 | Plik | Opis |
 |---|---|
 | [Instrukcja.md](Instrukcja.md) | instrukcja dnia – teoria, kroki, kod, punkty kontrolne |
+| [Instrukcja-male-kroki.md](Instrukcja-male-kroki.md) | MVVM i DI w 10 małych krokach: osobne mini-projekty (`MaleKroki/`), po jednym temacie na projekt, z eksperymentami |
 
 ## Punkt startowy
 
 `P03WeatherForecastWPF.Client` z repozytorium `32Dzien11` (klient Open‑Meteo z logiką w code‑behind).
 
 ## Projekty
+
+Folder `MaleKroki/` ma własną solucję `MaleKroki.slnx` z dziesięcioma mini-projektami (K01–K10) do instrukcji „małe kroki”. Nie są częścią `32Dzien12.slnx`.
+
 
 | Projekt | Typ | Co pokazuje |
 |---|---|---|
